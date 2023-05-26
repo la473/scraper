@@ -11,9 +11,9 @@ trait Scrapper {
 class JsoupScrapper extends Scrapper {
   override def scrap(request: ScrapRequest): IO[ScrapResult] = {
     IO.blocking {
-      val document = Jsoup.connect(request.url).userAgent("Mozilla/17.0").get
-      val question = document.select(".a-offscreen").html
-      ScrapResult(scrapRequestId = request.id, price = question)
+      val page = Jsoup.connect(request.url).userAgent("Mozilla/17.0").get
+      val price = page.select(".a-offscreen").html
+      ScrapResult(scrapRequestId = request.id, price = price)
     }
   }
 }
